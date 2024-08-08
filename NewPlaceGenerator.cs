@@ -7,7 +7,7 @@ public class NewPlaceGenerator
 
     public NewPlaceGenerator()
     {
-        place = "00N";
+        place = "0 0 N";
     }
 
     private bool IsValidDigit(char c)
@@ -22,9 +22,9 @@ public class NewPlaceGenerator
 
     private void UpdatePositionBasedOnDirection()
     {
-        char direction = place[2];
+        char direction = place[4];
         int x = int.Parse(place[0].ToString());
-        int y = int.Parse(place[1].ToString());
+        int y = int.Parse(place[2].ToString());
 
         switch (direction)
         {
@@ -60,14 +60,15 @@ public class NewPlaceGenerator
                 throw new InvalidOperationException("Invalid direction in place.");
         }
 
-        place = $"{x:D1}{y:D1}{direction}";
+
+        place = $"{x} {y} {direction}";
     }
 
     private void TurnOrCheckMove(char letter)
     {
         if (letter == 'L')
         {
-            char currentDirection = place[2];
+            char currentDirection = place[4];
             char newDirection;
 
             switch (currentDirection)
@@ -93,11 +94,11 @@ public class NewPlaceGenerator
                     break;
             }
 
-            place = place.Substring(0, 2) + newDirection;
+            place = $"{place[0]} {place[2]} {newDirection}";
         }
         else if (letter == 'R')
         {
-            char currentDirection = place[2];
+            char currentDirection = place[4];
             char newDirection;
 
             switch (currentDirection)
@@ -123,7 +124,7 @@ public class NewPlaceGenerator
                     break;
             }
 
-            place = place.Substring(0, 2) + newDirection;
+            place = $"{place[0]} {place[2]} {newDirection}";
         }
         else if (letter == 'M')
         {
@@ -133,11 +134,11 @@ public class NewPlaceGenerator
 
     public string GenerateNewPlace(string oldPlace, string input)
     {
-        if (oldPlace.Length != 3 ||
-            !char.IsDigit(oldPlace[0]) || !char.IsDigit(oldPlace[1]) ||
-            !char.IsLetter(oldPlace[2]) ||
-            !IsValidDigit(oldPlace[0]) || !IsValidDigit(oldPlace[1]) ||
-            !IsValidLetter(oldPlace[2]))
+        if (oldPlace.Length != 5 ||
+            !char.IsDigit(oldPlace[0]) || !char.IsDigit(oldPlace[2]) ||
+            !char.IsLetter(oldPlace[4]) ||
+            !IsValidDigit(oldPlace[0]) || !IsValidDigit(oldPlace[2]) ||
+            !IsValidLetter(oldPlace[4]))
         {
             throw new ArgumentException("Incorrect Starting Place");
         }
