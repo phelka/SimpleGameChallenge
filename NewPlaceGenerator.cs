@@ -1,13 +1,13 @@
 ﻿namespace _2024_08_08_Challenge;
 
-public class NewPlaceGenerator
+public class NewPlaceGenerator // TODO keep it short: PlaceGenerator (new seems to be not needed)
 {
     private const int SIZE = 5;
     private string place;
 
     public NewPlaceGenerator()
     {
-        place = "0 0 N";
+        place = "0 0 N"; // TODO place could be a structure or a class
     }
 
     private bool IsValidDigit(char c)
@@ -22,7 +22,7 @@ public class NewPlaceGenerator
 
     private void UpdatePositionBasedOnDirection()
     {
-        char direction = place[4];
+        char direction = place[4]; // TODO this would be easier if place would be a struct or a class - e.g. Place or Location; also direction could be an Enum
         int x = int.Parse(place[0].ToString());
         int y = int.Parse(place[2].ToString());
 
@@ -64,7 +64,7 @@ public class NewPlaceGenerator
         place = $"{x} {y} {direction}";
     }
 
-    private void TurnOrCheckMove(char letter)
+    private void TurnOrCheckMove(char letter) // TODO `letter` param could have a better name - like `command`; also it could be an Enum
     {
         if (letter == 'L')
         {
@@ -132,7 +132,7 @@ public class NewPlaceGenerator
         }
     }
 
-    public string GenerateNewPlace(string oldPlace, string input)
+    public string GenerateNewPlace(string oldPlace, string input) // TODO separation of concern: one thing is to parse input text from user, another thing is to apply moves/commands to the pawn. Separate to two classes maybe?
     {
         if (oldPlace.Length != 5 ||
             !char.IsDigit(oldPlace[0]) || !char.IsDigit(oldPlace[2]) ||
